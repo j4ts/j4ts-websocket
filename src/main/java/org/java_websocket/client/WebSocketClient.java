@@ -27,7 +27,7 @@ public abstract class WebSocketClient {
         webSocket = new WebSocket(uri.toString());
 
         webSocket.onopen = e -> {
-            onOpen(null);
+            onOpen(ServerHandshake.EMPTY);
             return e;
         };
         webSocket.onmessage = e -> {
@@ -41,7 +41,7 @@ public abstract class WebSocketClient {
         };
 
         webSocket.onerror = e -> {
-            onError(cachedException);
+            onError(cachedException == null ? new RuntimeException("No cached exception :( only this event: " + e) : cachedException);
             return e;
         };
     }
