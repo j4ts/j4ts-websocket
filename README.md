@@ -1,44 +1,46 @@
 # j4ts-java-websocket
-A JSweet implementation for https://github.com/TooTallNate/Java-WebSocket websocket client
+A JSweet implementation for https://github.com/TakahikoKawasaki/nv-websocket-client websocket client
 
 
 example:
 ```
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
 
+import com.neovisionaries.ws.client.*;
+
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Map;
 
-public class ExampleClient extends WebSocketClient {
-    public ExampleClient( URI serverURI ) {
-        super( serverURI );
-    }
+public class Echo {
+    public static void main( String[] args ) throws IOException, WebSocketException, URISyntaxException {
+        WebSocket socket = new WebSocketFactory().createSocket(new URI("wss://echo.websocket.org"));
 
-    @Override
-    public void onOpen( ServerHandshake handshakedata ) {
-        send("Hello, it is me. Mario :)");
-    }
+        socket.addListener(new WebSocketAdapter() {
+            @Override
+            public void onConnected(WebSocket webSocket, Map<String, List<String>> map) {
+                System.err.println("connected");
+                webSocket.sendText("megy");
+            }
 
-    @Override
-    public void onMessage( String message ) {
-        System.out.println( "received: " + message );
-    }
+            @Override
+            public void onDisconnected(WebSocket webSocket, WebSocketFrame webSocketFrame, WebSocketFrame webSocketFrame1, boolean b) {
+                System.err.println("Disconnected");
+            }
 
-    @Override
-    public void onClose( int code, String reason, boolean remote ) {
-        System.out.println( "Connection closed by " + ( remote ? "remote peer" : "us" ) + 
-                " Code: " + code + " Reason: " + reason );
-    }
+            @Override
+            public void onTextMessage(WebSocket webSocket, String s) {
+                System.err.println("text message: " + s);
+            }
 
-    @Override
-    public void onError( Exception ex ) {
-        ex.printStackTrace();
-    }
-
-    public static void main( String[] args ) throws URISyntaxException {
-        ExampleClient c = new ExampleClient( new URI( "wss://echo.websocket.org" ));
-        c.connect();
+            @Override
+            public void onError(WebSocket webSocket, WebSocketException e) {
+                e.printStackTrace();
+                System.err.println("error ");
+            }
+        });
+        socket.connect();
     }
 }
 ```

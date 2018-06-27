@@ -120,7 +120,11 @@
             <artifactId>j4ts</artifactId>
             <version>0.5.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.jsweet.candies</groupId>
+            <artifactId>jquery</artifactId>
+            <version>1.10.0-20170726</version>
+        </dependency>
     </dependencies>
 
     <distributionManagement>
