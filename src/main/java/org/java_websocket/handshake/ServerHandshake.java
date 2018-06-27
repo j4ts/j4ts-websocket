@@ -11,7 +11,11 @@ public interface ServerHandshake {
 
     byte[] getContent();
 
-    ServerHandshake EMPTY = new ServerHandshake() {
+    class EmptyServerHandshake implements ServerHandshake {
+        public static final EmptyServerHandshake INSTANCE = new EmptyServerHandshake();
+
+        private EmptyServerHandshake() {}
+
         @Override
         public short getHttpStatus() {
             return 0;
@@ -36,5 +40,5 @@ public interface ServerHandshake {
         public byte[] getContent() {
             return new byte[0];
         }
-    };
+    }
 }

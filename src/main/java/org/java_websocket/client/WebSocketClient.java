@@ -27,11 +27,11 @@ public abstract class WebSocketClient {
         webSocket = new WebSocket(uri.toString());
 
         webSocket.onopen = e -> {
-            onOpen(ServerHandshake.EMPTY);
+            onOpen(ServerHandshake.EmptyServerHandshake.INSTANCE);
             return e;
         };
         webSocket.onmessage = e -> {
-            onMessage(e.origin);
+            onMessage(e.data.toString());
             return e;
         };
 
