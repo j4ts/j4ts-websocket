@@ -84,7 +84,8 @@ public class WebSocket {
         Lang.<def.dom.WebSocket> any(this.domWebSocket).onclose = e -> {
             for (WebSocketListener listener : listeners) {
                 try {
-                    listener.onDisconnected(this, new WebSocketFrame(), new WebSocketFrame(), !closedManually);
+                    WebSocketFrame closeFrame = WebSocketFrame.createCloseFrame((int) e.code, e.reason);
+                    listener.onDisconnected(this, closeFrame, closeFrame, !closedManually);
                 } catch (Exception e1) {
                     cacheException = new WebSocketException(e1);
                 }
