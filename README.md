@@ -19,28 +19,39 @@ public class Echo {
 
         socket.addListener(new WebSocketAdapter() {
             @Override
-            public void onConnected(WebSocket webSocket, Map<String, List<String>> map) {
+            public void onConnected(WebSocket webSocket, Map<String, List<String>> headers) {
                 System.err.println("connected");
                 webSocket.sendText("megy");
             }
 
             @Override
-            public void onDisconnected(WebSocket webSocket, WebSocketFrame webSocketFrame, WebSocketFrame webSocketFrame1, boolean b) {
-                System.err.println("Disconnected");
+            public void onDisconnected(WebSocket webSocket, WebSocketFrame serverCloseFrame, 
+                    WebSocketFrame clientCloseFrame, boolean closedByServer) {
+                System.err.println("Disconnected with code/status: " + serverCloseFrame.getCloseCode() 
+                    + "/" + serverCloseFrame.getCloseReason());
             }
 
             @Override
-            public void onTextMessage(WebSocket webSocket, String s) {
-                System.err.println("text message: " + s);
+            public void onTextMessage(WebSocket webSocket, String message) {
+                System.err.println("text message: " + message);
             }
 
             @Override
-            public void onError(WebSocket webSocket, WebSocketException e) {
-                e.printStackTrace();
+            public void onError(WebSocket webSocket, WebSocketException exception) {
+                exception.printStackTrace();
                 System.err.println("error ");
             }
         });
         socket.connect();
     }
 }
+```
+
+add maven dependency to your repo, and you can use it java such as javascript side
+```
+<dependency>
+    <groupId>com.neovisionaries</groupId>
+    <artifactId>nv-websocket-client</artifactId>
+    <version>2.5</version>
+</dependency>
 ```
