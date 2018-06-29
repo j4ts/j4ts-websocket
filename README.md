@@ -1,4 +1,4 @@
-# j4ts-java-websocket
+# j4ts-websocket
 A JSweet implementation for https://github.com/TakahikoKawasaki/nv-websocket-client websocket client
 
 
