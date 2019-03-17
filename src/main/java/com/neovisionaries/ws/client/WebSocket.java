@@ -60,13 +60,18 @@ public class WebSocket {
         };
 
         Lang.<def.dom.WebSocket> any(this.domWebSocket).onmessage = e -> {
-            for (WebSocketListener listener : listeners) {
-                try {
-                    listener.onTextMessage(this, e.data.toString());
-                } catch (Exception e1) {
-                    cacheException = new WebSocketException(e1);
+            def.dom.FileReader fileReader = new def.dom.FileReader();
+            fileReader.addEventListener("loadend", msg -> {
+                String text = msg.srcElement.$get("result");
+                for (WebSocketListener listener : listeners) {
+                    try {
+                        listener.onTextMessage(this, text);
+                    } catch (Exception e1) {
+                        cacheException = new WebSocketException(e1);
+                    }
                 }
-            }
+            });
+            fileReader.readAsText(e.$get("data"));
             return e;
         };
 

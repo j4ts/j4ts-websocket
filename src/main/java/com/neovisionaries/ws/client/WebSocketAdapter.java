@@ -23,4 +23,9 @@ public class WebSocketAdapter implements WebSocketListener {
     public void onDisconnected(WebSocket websocket, WebSocketFrame serverCloseFrame, WebSocketFrame clientCloseFrame, boolean closedByServer) throws Exception {
 
     }
+
+    @Override
+    public void onBinaryMessage(WebSocket websocket, byte[] binary) throws Exception {
+
+    }
 }

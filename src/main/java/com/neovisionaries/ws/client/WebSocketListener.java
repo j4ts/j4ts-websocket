@@ -10,5 +10,7 @@ public interface WebSocketListener {
 
     void onTextMessage(WebSocket webSocket, String message) throws Exception;
 
+    void onBinaryMessage(WebSocket websocket, byte[] binary) throws Exception;
+
     void onDisconnected(WebSocket websocket, WebSocketFrame serverCloseFrame, WebSocketFrame clientCloseFrame, boolean closedByServer) throws Exception;
 }

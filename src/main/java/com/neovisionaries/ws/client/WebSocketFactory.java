@@ -8,6 +8,10 @@ public class WebSocketFactory {
 
     }
 
+    public WebSocket createSocket(String uri) throws IOException {
+        return createSocket(URI.create(uri));
+    }
+
     public WebSocket createSocket(URI uri) throws IOException {
         return new WebSocket(uri);
     }
